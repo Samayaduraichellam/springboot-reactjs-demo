@@ -5,7 +5,8 @@ import App from './App'
 
 
 global.renderServer = (products) => {
+    const jsProducts = Java.from (products);
     return renderToString (
-        <App products={products} />
+        <App products={jsProducts} />
     )
 };
