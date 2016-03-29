@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.script.ScriptException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProductController {
@@ -33,6 +35,8 @@ public class ProductController {
 
         String                         renderedHtml = react.renderProducts(products, sortBy);
         model.addAttribute ("content", renderedHtml);
+        model.addAttribute ("initialProducts", products);
+        model.addAttribute ("initialSortBy", sortBy);
 
         return "index";
     }
@@ -41,5 +45,14 @@ public class ProductController {
         return "price".equals (sortBy)
                 ? (p1, p2) -> p1.getValue () < p2.getValue () ? -1 : 0
                 : (p1, p2) -> p1.getName ().compareToIgnoreCase (p2.getName ());
+    }
+
+    private Map<String, Object> getInitialState(List<Product> products, String sortBy) {
+
+        Map<String, Object> state = new HashMap<> ();
+
+               state.put ("products", products);
+               state.put ("sortBy", sortBy);
+        return state;
     }
 }
