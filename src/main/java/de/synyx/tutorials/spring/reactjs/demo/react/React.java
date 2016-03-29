@@ -12,12 +12,12 @@ import java.util.Map;
 @Component
 public class React {
 
-    public String renderProducts (List<Product> products) throws ScriptException {
+    public String renderProducts (List<Product> products, String sortBy) throws ScriptException {
 
         NashornScriptEngine nashornScriptEngine = getNashornScriptEngine ();
 
         try {
-            Object                 html = nashornScriptEngine.invokeFunction ("renderServer", products);
+            Object                 html = nashornScriptEngine.invokeFunction ("renderServer", products, sortBy);
             return String.valueOf (html);
         }
         catch (Exception e) {

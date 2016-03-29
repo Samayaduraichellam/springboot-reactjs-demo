@@ -3,7 +3,7 @@ import React from 'react'
 
 
 const ProductList = ({
-    products
+    products = []
 }) => (
     <div>
         <ul>

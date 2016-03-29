@@ -8,5 +8,12 @@
 
 <div id="root" th:utext="${content}"></div>
 
+<script src="/app.bundle.js"></script>
+<script th:inline="javascript">
+    window.INITIAL_PRODUCTS = [[${initialProducts}]];
+    window.INITIAL_SORTBY = [[${initialSortBy}]];
+    window.renderClient (INITIAL_PRODUCTS, INITIAL_SORTBY);
+</script>
+
 </body>
 </html>
