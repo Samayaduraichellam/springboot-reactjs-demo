@@ -16,7 +16,9 @@ class App extends React.Component {
 
     onFilterChange ({ sortBy }) {
         this.setState ({sortBy, products: []});
-        fetch (`/?sort=${sortBy}`)
+        const path = `/?sort=${sortBy}`;
+        window.history.pushState (null, null, path);
+        fetch (path)
             .then (response => response.json ())
             .then (products => this.setState ({ products }));
     }
