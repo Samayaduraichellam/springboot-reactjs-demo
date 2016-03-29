@@ -6,12 +6,20 @@ import ProductList from './product/ProductList'
 
 class App extends React.Component {
 
+    constructor (props) {
+        super (props);
+        this.state = {
+            sortBy  : props.sortBy,
+            products: props.products
+        }
+    }
+
     render () {
 
         const {
             sortBy,
             products
-        } = this.props;
+        } = this.state;
 
         return (
             <div>
