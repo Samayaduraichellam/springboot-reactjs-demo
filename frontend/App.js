@@ -11,7 +11,14 @@ class App extends React.Component {
         this.state = {
             sortBy  : props.sortBy,
             products: props.products
-        }
+        };
+    }
+
+    onFilterChange ({ sortBy }) {
+        this.setState ({sortBy, products: []});
+        fetch (`/?sort=${sortBy}`)
+            .then (response => response.json ())
+            .then (products => this.setState ({ products }));
     }
 
     render () {
@@ -24,7 +31,7 @@ class App extends React.Component {
         return (
             <div>
                 <h1>Aweseome Product List</h1>
-                <ProductFilter sortBy={sortBy}/>
+                <ProductFilter sortBy={sortBy} onSubmit={data => this.onFilterChange (data)} />
                 <ProductList products={products}/>
             </div>
         );

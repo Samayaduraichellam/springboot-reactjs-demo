@@ -4,6 +4,12 @@ import React from 'react'
 
 class ProductFilter extends React.Component {
 
+    handleSubmit (event) {
+                  event.preventDefault ();
+        const sortBy = event.target.elements.sort.value;
+        this.props.onSubmit ({ sortBy });
+    }
+
     render () {
 
         const {
@@ -11,7 +17,7 @@ class ProductFilter extends React.Component {
         } = this.props;
 
         return (
-            <form action="/" method="get">
+            <form action="/" method="get" onSubmit={event => this.handleSubmit (event)}>
                 <b>sort by</b>
                 <FilterItem label="Name" value="name" checked={sortBy === 'name'}/>
                 <FilterItem label="Price" value="price" checked={sortBy === 'price'}/>
