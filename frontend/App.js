@@ -14,6 +14,21 @@ class App extends React.Component {
         };
     }
 
+    componentDidMount () {
+        this.popstateListener = window.addEventListener ('popstate', event => {
+            const { pathname, search } = event.target.location;
+            const sortBy = search.split ('=')[1];
+            this.setState ({sortBy, products: []});
+            fetch (`${pathname}${search}`)
+                .then (response => response.json ())
+                .then (products => this.setState ({ products }));
+        })
+    }
+
+    componentWillUnmount () {
+        window.removeEventListener ('popstate', this.popstateListener);
+    }
+
     onFilterChange ({ sortBy }) {
         this.setState ({sortBy, products: []});
         const path = `/?sort=${sortBy}`;
