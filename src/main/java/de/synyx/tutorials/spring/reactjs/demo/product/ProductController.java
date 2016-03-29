@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.script.ScriptException;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -23,14 +25,21 @@ public class ProductController {
     }
 
     @RequestMapping ("/")
-    public String products (Model model) throws JsonProcessingException, ScriptException {
+    public String products (@RequestParam(name = "sort", defaultValue = "name") String sortBy,
+                            Model model) throws JsonProcessingException, ScriptException {
 
-        List<Product> products = repo.findAll();
+        List<Product> products = repo.findAllSorted (getProductComparator (sortBy));
 
 
-        String                         renderedHtml = react.renderProducts(products);
+        String                         renderedHtml = react.renderProducts(products, sortBy);
         model.addAttribute ("content", renderedHtml);
 
         return "index";
+    }
+
+    private Comparator<Product> getProductComparator (String sortBy) {
+        return "price".equals (sortBy)
+                ? (p1, p2) -> p1.getValue () < p2.getValue () ? -1 : 0
+                : (p1, p2) -> p1.getName ().compareToIgnoreCase (p2.getName ());
     }
 }
