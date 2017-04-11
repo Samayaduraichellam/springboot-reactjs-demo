@@ -1,14 +1,15 @@
 
 import React from 'react'
+import styles from './productList.css';
 
 
 const ProductList = ({
     products = []
 }) => (
     <div>
-        <ul>
+        <ul className={styles.list}>
         {products.map (({name, value}, i) => (
-            <li key={i}>
+            <li key={i} className={styles.listItem}>
                 <b>{name}</b>&nbsp;<span>{value}&nbsp;EUR</span>
             </li>
         ))}

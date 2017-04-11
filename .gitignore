@@ -4,4 +4,7 @@
 build/
 /node_modules
 npm-debug.log
+
+# generated resources
 /src/main/resources/static/app.bundle.js
+/src/main/resources/static/styles.css
